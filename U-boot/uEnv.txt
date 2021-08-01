@@ -1,0 +1,23 @@
+#********** Itachi's uEnv.txt**********
+# U-boot require to booting the kernel
+#	1. Kernel image
+#	2. FDT 
+#	3. bootargs
+# Note: Uboot sequence: bootcmd => load uEnv.txt => uenvcmd (In case Uenv.txt exist to change the kernel search sequence)
+#
+
+##1. Load the kernel image
+#echo "Loading the kernel image"
+#load mmc 0:2 $loadaddr zImage
+#
+##2. Load the FDT 
+#load mmc 0:2 $fdtaddr am335x-boneblack.dtb
+#
+##3. Load FS from mmc1 partition 1 (eMMC)
+#setenv bootargs console=ttyO0,115200n8 root=/dev/mmcblk1p1 rw
+#
+##4. Booting the kernel with zImage
+#bootz $loadaddr - $fdtaddr
+
+bootargs=console=ttyO0,115200n8 root=/dev/mmcblk1p1 rw
+uenvcmd=echo "Loading the kernel image"; load mmc 0:1 $loadaddr zImage; echo "Loading the FDT"; load mmc 0:1 $fdtaddr am335x-boneblack.dtb;  echo "Itachi is booting the kernel" ; bootz $loadaddr - $fdtaddr;
