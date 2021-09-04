@@ -1,0 +1,8 @@
+console=ttyO0,115200n8
+ipaddr=192.168.137.100
+serverip=192.168.137.166
+rootpath=/srv/nfs/bbb/,nfsvers=3, ip=dhcp,nolock,wsize=1024,rsize=1024 rootwait rootdelay=5
+loadkernel=echo "Loading the kernel image"; load mmc 0:1 $loadaddr zImage; echo "Loading the FDT"; load mmc 0:1 $fdtaddr am335x-boneblack.dtb; printenv ipaddr; printenv serverip; printenv rootpath
+netargs=setenv bootargs console=${console} root=/dev/nfs rw rootfstype=nfs nfsroot=${serverip}:${rootpath}
+uenvcmd=setenv autoload no; run loadkernel; run netargs; ping ${serverip}; echo "Itachi is booting the kernel"; bootz ${loadaddr} - ${fdtaddr}
+

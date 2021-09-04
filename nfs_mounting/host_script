@@ -1,0 +1,8 @@
+1. Install the nfs-kernel-server package
+sudo apt install nfs-kernel-server
+2. Add shared file system by writing to /etc/exports
+/home/itachi/networkfs *(rw,sync,no_subtree_check,no_root_squash) //export the"/home/itachi/networkfs" to any address on local network
+3. Restart the NFS to update the new configurations
+sudo exportfs -rva
+sudo service nfs-kernel-server restart
+sudo service nfs-kernel-server status
